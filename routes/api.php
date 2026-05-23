@@ -9,6 +9,13 @@ use App\Http\Controllers\PassController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\EmergencyController;
 
+Route::get('/debug-logs', function() {
+    if (file_exists(storage_path('logs/laravel.log'))) {
+        return file_get_contents(storage_path('logs/laravel.log'));
+    }
+    return 'No log file found.';
+});
+
 // --- 1. Authentification ---
 Route::post('/auth/pro/login', [AuthController::class, 'proLogin']);
 Route::post('/auth/patient/register', [AuthController::class, 'patientRegister']);
