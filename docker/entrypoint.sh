@@ -10,15 +10,10 @@ if [ -z "$APP_KEY" ]; then
   echo "========================================"
 fi
 
-# Map Render DATABASE_URL to individual DB vars (PostgreSQL)
+# Map Render DATABASE_URL to Laravel's DB_URL
 if [ -n "$DATABASE_URL" ]; then
-  # Parse postgres://user:password@host:port/dbname
   export DB_CONNECTION=pgsql
-  export DB_HOST=$(echo "$DATABASE_URL" | sed -e 's/^.*@//' -e 's/:.*//' -e 's/\/.*//')
-  export DB_PORT=$(echo "$DATABASE_URL" | sed -e 's/^.*@//' -e 's/^[^:]*://' -e 's/\/.*//')
-  export DB_DATABASE=$(echo "$DATABASE_URL" | sed -e 's/.*\///')
-  export DB_USERNAME=$(echo "$DATABASE_URL" | sed -e 's/^.*:\/\///' -e 's/:.*//')
-  export DB_PASSWORD=$(echo "$DATABASE_URL" | sed -e 's/^[^:]*:\/\/[^:]*://' -e 's/@.*//')
+  export DB_URL="$DATABASE_URL"
 fi
 
 # Cache config for performance
