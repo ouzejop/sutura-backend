@@ -9,14 +9,7 @@ use App\Http\Controllers\PassController;
 use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\EmergencyController;
 
-Route::get('/debug-logs', function() {
-    try {
-        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
-        return \Illuminate\Support\Facades\Artisan::output();
-    } catch (\Exception $e) {
-        return $e->getMessage() . "\n" . $e->getTraceAsString();
-    }
-});
+
 
 // --- 1. Authentification ---
 Route::post('/auth/pro/login', [AuthController::class, 'proLogin']);
