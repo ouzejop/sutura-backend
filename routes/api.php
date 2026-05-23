@@ -10,10 +10,12 @@ use App\Http\Controllers\ConsultationController;
 use App\Http\Controllers\EmergencyController;
 
 Route::get('/debug-logs', function() {
-    if (file_exists(storage_path('logs/laravel.log'))) {
-        return file_get_contents(storage_path('logs/laravel.log'));
+    try {
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        return \Illuminate\Support\Facades\Artisan::output();
+    } catch (\Exception $e) {
+        return $e->getMessage() . "\n" . $e->getTraceAsString();
     }
-    return 'No log file found.';
 });
 
 // --- 1. Authentification ---
